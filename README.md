@@ -1,39 +1,59 @@
-# Introduction
+### 使用教程
 
-This is a skeleton application using the Hyperf framework. This application is meant to be used as a starting place for those looking to get their feet wet with Hyperf Framework.
+```php
+<?php
 
-# Requirements
+namespace App\Message;
+use App\Annotation\WSController;
+use App\Annotation\WSRoute;
 
-Hyperf has some requirements for the system environment, it can only run under Linux and Mac environment, but due to the development of Docker virtualization technology, Docker for Windows can also be used as the running environment under Windows.
+#[WSController(prefix: 'index')]
+class IndexMessage extends BaseMessage
+{
+    #[WSRoute(path: 'sunIndex')]
+    public function index()
+    {
+        // $this->frame 可以自行修改baseMessage类
+        return $this->success([
+            'fd' => $this->frame->fd,
+        ], 'success to isun');
+    }
 
-The various versions of Dockerfile have been prepared for you in the [hyperf/hyperf-docker](https://github.com/hyperf/hyperf-docker) project, or directly based on the already built [hyperf/hyperf](https://hub.docker.com/r/hyperf/hyperf) Image to run.
+    #[WSRoute]
+    public function life()
+    {
+        return $this->success([
+            'fd' => $this->frame->fd,
+            'data' => 'life is good'
+        ], 'success to isun');
+    }
 
-When you don't want to use Docker as the basis for your running environment, you need to make sure that your operating environment meets the following requirements:  
+    #[WSRoute]
+    public function test()
+    {
+        return [
+            'message' => __METHOD__,
+        ];
+    }
 
- - PHP >= 8.0
- - Any of the following network engines
-   - Swoole PHP extension >= 4.5，with `swoole.use_shortname` set to `Off` in your `php.ini`
-   - Swow PHP extension (Beta)
- - JSON PHP extension
- - Pcntl PHP extension
- - OpenSSL PHP extension （If you need to use the HTTPS）
- - PDO PHP extension （If you need to use the MySQL Client）
- - Redis PHP extension （If you need to use the Redis Client）
- - Protobuf PHP extension （If you need to use the gRPC Server or Client）
+    #[WSRoute]
+    public function fly()
+    {
+        return [
+            'message' => __METHOD__,
+            'data' => [
+                'qq' => '123456789',
+                'email' => 'mqq@qq.com'
+            ]
+        ];
+    }
 
-# Installation using Composer
-
-The easiest way to create a new Hyperf project is to use Composer. If you don't have it already installed, then please install as per the documentation.
-
-To create your new Hyperf project:
-
-$ composer create-project hyperf/hyperf-skeleton path/to/install
-
-Once installed, you can run the server immediately using the command below.
-
-$ cd path/to/install
-$ php bin/hyperf.php start
-
-This will start the cli-server on port `9501`, and bind it to all network interfaces. You can then visit the site at `http://localhost:9501/`
-
-which will bring up Hyperf default home page.
+}
+```
+### websocket 请求
+```json
+{"action":"index.fly","data":{"name":"fly"}}
+```
+```json
+{"action":"index.sunIndex","data":{"name":"fly"}}
+```
