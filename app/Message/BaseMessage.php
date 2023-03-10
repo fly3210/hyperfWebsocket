@@ -20,8 +20,10 @@ class BaseMessage
     {
         return [
             'code' => $code,
+            'fd' => $this->frame->fd,
             'msg' => $msg,
-            'data' => $data
+            'data' => $data,
+            'time' => time()
         ];
     }
 
@@ -29,8 +31,10 @@ class BaseMessage
     {
         return [
             'code' => $code,
+            'fd' => $this->frame->fd,
             'msg' => $msg,
-            'data' => $data
+            'data' => $data,
+            'time' => time()
         ];
     }
 

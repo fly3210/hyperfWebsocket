@@ -11,9 +11,7 @@ class TestMessage extends BaseMessage
     #[WSRoute]
     public function index()
     {
-        return $this->success([
-            'fd' => $this->frame->fd,
-        ], 'success to isun');
+        return $this->success(json_decode($this->frame->data, true), 'success to isun');
     }
 
     #[WSRoute]
